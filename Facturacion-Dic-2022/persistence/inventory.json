@@ -1,0 +1,13 @@
+[
+  {
+    "product": {
+      "code": 1,
+      "name": "Arroz",
+      "quantity": 40,
+      "description": "ff",
+      "firstPrice": 666,
+      "secondPrice": 4,
+      "thirdPrice": 5
+    }
+  }
+]
