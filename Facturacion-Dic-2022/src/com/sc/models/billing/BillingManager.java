@@ -12,23 +12,23 @@ public class BillingManager {
         this.bills = new ArrayList<>();
     }
 
-    public void addBill(ArrayList<Product> products, int code) {
+    public void addBill(ArrayList<BillProduct> products, int code, Client client) {
         if (!bills.isEmpty()) {
             for (int i = 0; i < bills.size(); i++) {
                 if (bills.get(i).getCode() != code) {
-                    Bill bill = new Bill(products, code);
+                    Bill bill = new Bill(products, code, client);
                     bill.setTotal(bill.getTotal());
                     bills.add(bill);
                 }
             }
         } else {
-            Bill bill = new Bill(products, code);
+            Bill bill = new Bill(products, code, client);
             bill.setTotal(bill.getTotal());
             bills.add(bill);
         }
     }
 
-    public void editBill(ArrayList<Product> products, int code) {
+    public void editBill(ArrayList<BillProduct> products, int code) {
         if (!bills.isEmpty()) {
             for (int i = 0; i < bills.size(); i++) {
                 if (bills.get(i).getCode() == code) {

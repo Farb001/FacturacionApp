@@ -2,6 +2,8 @@ package com.sc.utilities;
 
 import com.google.gson.*;
 import com.sc.models.billing.Bill;
+import com.sc.models.billing.BillProduct;
+import com.sc.models.billing.Client;
 import com.sc.models.inventory.Product;
 
 
@@ -24,6 +26,9 @@ public class JsonUtilities {
     private static final String FIRST_PRICE = "firstPrice";
     private static final String SECOND_PRICE = "secondPrice";
     private static final String THIRD_PRICE = "thirdPrice";
+    private static final String TAX = "tax";
+    private static final String TOTAL = "total";
+    private static final String CLIENT = "client";
 
     public JsonUtilities() {
     }
@@ -195,6 +200,8 @@ public class JsonUtilities {
         return aux;
     }
 
+    //Bill
+
     public ArrayList<JSONBillFormat> loadBillJSON() throws IOException {
         verifyFiles();
         ArrayList<JSONBillFormat> bills = new ArrayList<>();
@@ -206,8 +213,11 @@ public class JsonUtilities {
                 JsonObject billJSON = (JsonObject) ((JsonObject) listProducts.get(i)).get(BILL);
                 int code = Integer.parseInt(String.valueOf(billJSON.get(CODE)));
                 JsonArray productsJSON = (JsonArray) billJSON.get(PRODUCTS);
-                ArrayList<Product> products = new Gson().fromJson(productsJSON, ArrayList.class);
-                bills.add(new JSONBillFormat(new Bill(products, code)));
+                ArrayList<BillProduct> products = new Gson().fromJson(productsJSON, ArrayList.class);
+                Client client = new Gson().fromJson(billJSON.get(CLIENT), Client.class);
+                double tax = Double.parseDouble(String.valueOf(billJSON.get(TAX)));
+                double total = Double.parseDouble(String.valueOf(billJSON.get(TOTAL)));
+                bills.add(new JSONBillFormat(new Bill(products, total, code, client)));
             }
         }
         return bills;
@@ -224,21 +234,27 @@ public class JsonUtilities {
                 JsonObject billJSON = (JsonObject) ((JsonObject) listProducts.get(i)).get(BILL);
                 int code = Integer.parseInt(String.valueOf(billJSON.get(CODE)));
                 JsonArray productsJSON = (JsonArray) billJSON.get(PRODUCTS);
-                ArrayList<Product> products = new Gson().fromJson(productsJSON, ArrayList.class);
-                bills.add(new Bill(products, code));
+                ArrayList<BillProduct> products = new Gson().fromJson(productsJSON, ArrayList.class);
+                Client client = new Gson().fromJson(billJSON.get(CLIENT), Client.class);
+                double tax = Double.parseDouble(String.valueOf(billJSON.get(TAX)));
+                double total = Double.parseDouble(String.valueOf(billJSON.get(TOTAL)));
+                bills.add(new Bill(products, total, code, client));
             }
         }
         return bills;
     }
 
-    public void writeNewBill(ArrayList<Product> products, int code) throws IOException {
+    public void writeNewBill(Bill bill) throws IOException {
         String jsonList = new Gson().toJson(loadBillJSON()).replace("\"", "").replace("\\", "");
         JsonArray jsonArray = JsonParser.parseString(jsonList).getAsJsonArray();
-        if (!verifyBill(code)) {
+        if (!verifyBill(bill.getCode())) {
             JsonObject billDetails = new JsonObject();
             JsonObject billObject = new JsonObject();
-            billDetails.addProperty(CODE, code);
-            billDetails.add(PRODUCTS, new Gson().toJsonTree(products));
+            billDetails.addProperty(CODE, bill.getCode());
+            billDetails.add(CLIENT, new Gson().toJsonTree(bill.getClient()));
+            billDetails.add(PRODUCTS, new Gson().toJsonTree(bill.getProducts()));
+            billDetails.addProperty(TAX, bill.TAX);
+            billDetails.addProperty(TOTAL, bill.getTotal());
             billObject.add(BILL, billDetails);
             jsonArray.add(billObject);
             try (Writer writer = new FileWriter(FILE_BILL_PATH)) {
@@ -248,7 +264,7 @@ public class JsonUtilities {
         }
     }
 
-    public void updateBill(ArrayList<Product> products, int code) throws IOException {
+    public void updateBill(ArrayList<BillProduct> products, int code) throws IOException {
         String jsonList = new Gson().toJson(loadBillJSON()).replace("\"", "").replace("\\", "");
         JsonArray jsonArray = JsonParser.parseString(jsonList).getAsJsonArray();
         if (verifyBill(code)) {

@@ -87,4 +87,17 @@ public class Product {
     public void setThirdPrice(int thirdPrice) {
         this.thirdPrice = thirdPrice;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "code=" + code +
+                ", name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", description='" + description + '\'' +
+                ", firstPrice=" + firstPrice +
+                ", secondPrice=" + secondPrice +
+                ", thirdPrice=" + thirdPrice +
+                '}';
+    }
 }

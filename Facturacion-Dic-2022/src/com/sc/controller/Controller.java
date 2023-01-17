@@ -67,9 +67,14 @@ public class Controller implements ActionListener {
     }
 
     private void showEditProduct() {
-        Product aux = manager.getProduct(mainFrame.selectProduct());
-        mainFrame.setDataEditDialog(aux.getCode(), aux.getName(), aux.getQuantity(), aux.getDescription(), aux.getFirstPrice(), aux.getSecondPrice(), aux.getThirdPrice());
-        mainFrame.showEditProductDialog();
+        Product aux = null;
+        try {
+            aux = manager.getProduct(mainFrame.selectProduct());
+            mainFrame.setDataEditDialog(aux.getCode(), aux.getName(), aux.getQuantity(), aux.getDescription(), aux.getFirstPrice(), aux.getSecondPrice(), aux.getThirdPrice());
+            mainFrame.showEditProductDialog();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void addProduct() {

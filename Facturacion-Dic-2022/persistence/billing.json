@@ -2,17 +2,27 @@
   {
     "bill": {
       "code": 12,
+      "client": {
+        "id": 1002693485,
+        "name": "Fabian",
+        "lastName": "Rodriguez"
+      },
       "products": [
         {
           "code": 1,
+          "price": 2500,
           "name": "Arroz",
-          "quantity": 40,
-          "description": "ff",
-          "firstPrice": 666,
-          "secondPrice": 4,
-          "thirdPrice": 5
+          "quantity": 3
+        },
+        {
+          "code": 2,
+          "price": 3200,
+          "name": "Jabon",
+          "quantity": 2
         }
-      ]
+      ],
+      "tax": 0.16,
+      "total": 16124.0
     }
   }
 ]

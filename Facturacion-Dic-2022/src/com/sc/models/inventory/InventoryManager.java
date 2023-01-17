@@ -53,11 +53,11 @@ public class InventoryManager {
         return product;
     }
 
-    public void removeOneProduct(int code) {
+    public void removeOneProduct(int code, int quantity) {
         if (!products.isEmpty()) {
             for (int i = 0; i < products.size(); i++) {
                 if (products.get(i).getCode() == code && products.get(i).getQuantity() > 0) {
-                    products.get(i).setQuantity(products.get(i).getQuantity() - 1);
+                    products.get(i).setQuantity(products.get(i).getQuantity() - quantity);
                 }
             }
         }

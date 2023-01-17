@@ -6,25 +6,28 @@ import java.util.ArrayList;
 
 public class Bill {
 
-    private static final double TAX = 0.16;
+    public static final double TAX = 0.16;
 
     private int code;
-    private ArrayList<Product> products;
+    private ArrayList<BillProduct> products;
     private double total;
-    private double tax;
+    private Client client;
 
-    public Bill(ArrayList<Product> products, double total, int code) {
+    public Bill(ArrayList<BillProduct> products, double total, int code, Client client) {
         this.products = products;
         this.total = total;
         this.code = code;
+        this.client = client;
     }
 
-    public Bill(ArrayList<Product> products, int code) {
+    public Bill(ArrayList<BillProduct> products, int code, Client client) {
         this.products = products;
         this.code = code;
+        this.client = client;
     }
 
-    public Bill(){}
+    public Bill() {
+    }
 
     public int getCode() {
         return code;
@@ -34,18 +37,18 @@ public class Bill {
         this.code = code;
     }
 
-    public ArrayList<Product> getProducts() {
+    public ArrayList<BillProduct> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(ArrayList<BillProduct> products) {
         this.products = products;
     }
 
     public double getTotal() {
         double totalPrice = 0;
         for (int i = 0; i < products.size(); i++) {
-            totalPrice += products.get(i).getFirstPrice();
+            totalPrice += (products.get(i).getPrice() * products.get(i).getQuantity());
         }
         totalPrice += (totalPrice * TAX);
         return totalPrice;
@@ -55,11 +58,11 @@ public class Bill {
         this.total = total;
     }
 
-    public double getTax() {
-        return tax;
+    public Client getClient() {
+        return client;
     }
 
-    public void setTax(double tax) {
-        this.tax = tax;
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
