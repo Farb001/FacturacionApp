@@ -1,6 +1,7 @@
 package com.sc.utilities;
 
 import com.google.gson.*;
+import com.google.gson.internal.LinkedTreeMap;
 import com.sc.models.billing.Bill;
 import com.sc.models.billing.BillProduct;
 import com.sc.models.billing.Client;
@@ -9,6 +10,7 @@ import com.sc.models.inventory.Product;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class JsonUtilities {
@@ -29,6 +31,7 @@ public class JsonUtilities {
     private static final String TAX = "tax";
     private static final String TOTAL = "total";
     private static final String CLIENT = "client";
+    private static final String PRICE = "price";
 
     public JsonUtilities() {
     }
@@ -213,7 +216,8 @@ public class JsonUtilities {
                 JsonObject billJSON = (JsonObject) ((JsonObject) listProducts.get(i)).get(BILL);
                 int code = Integer.parseInt(String.valueOf(billJSON.get(CODE)));
                 JsonArray productsJSON = (JsonArray) billJSON.get(PRODUCTS);
-                ArrayList<BillProduct> products = new Gson().fromJson(productsJSON, ArrayList.class);
+                ArrayList<LinkedTreeMap<String, Object>> productsTree = new Gson().fromJson(productsJSON, ArrayList.class);
+                ArrayList<BillProduct> products = parseGsonTree(productsTree);
                 Client client = new Gson().fromJson(billJSON.get(CLIENT), Client.class);
                 double tax = Double.parseDouble(String.valueOf(billJSON.get(TAX)));
                 double total = Double.parseDouble(String.valueOf(billJSON.get(TOTAL)));
@@ -234,7 +238,8 @@ public class JsonUtilities {
                 JsonObject billJSON = (JsonObject) ((JsonObject) listProducts.get(i)).get(BILL);
                 int code = Integer.parseInt(String.valueOf(billJSON.get(CODE)));
                 JsonArray productsJSON = (JsonArray) billJSON.get(PRODUCTS);
-                ArrayList<BillProduct> products = new Gson().fromJson(productsJSON, ArrayList.class);
+                ArrayList<LinkedTreeMap<String, Object>> productsTree = new Gson().fromJson(productsJSON, ArrayList.class);
+                ArrayList<BillProduct> products = parseGsonTree(productsTree);
                 Client client = new Gson().fromJson(billJSON.get(CLIENT), Client.class);
                 double tax = Double.parseDouble(String.valueOf(billJSON.get(TAX)));
                 double total = Double.parseDouble(String.valueOf(billJSON.get(TOTAL)));
@@ -242,6 +247,30 @@ public class JsonUtilities {
             }
         }
         return bills;
+    }
+
+    private ArrayList<BillProduct> parseGsonTree(ArrayList<LinkedTreeMap<String,Object>> productsTree){
+        ArrayList<BillProduct> products = new ArrayList<>();
+        for (int j = 0; j < productsTree.size(); j++) {
+            BillProduct product = new BillProduct();
+            for (int k = 0; k < productsTree.get(j).size(); k++) {
+                switch (k) {
+                    case 0:
+                        product.setCode((int)((double) productsTree.get(j).get(CODE)));
+                        break;
+                    case 1:
+                        product.setPrice((int) ((double)productsTree.get(j).get(PRICE)));
+                        break;
+                    case 2:
+                        product.setName(String.valueOf(productsTree.get(j).get(NAME)));
+                        break;
+                    case 3:
+                        product.setQuantity((int) ((double)productsTree.get(j).get(QUANTITY)));
+                }
+            }
+            products.add(product);
+        }
+        return products;
     }
 
     public void writeNewBill(Bill bill) throws IOException {
@@ -252,7 +281,7 @@ public class JsonUtilities {
             JsonObject billObject = new JsonObject();
             billDetails.addProperty(CODE, bill.getCode());
             billDetails.add(CLIENT, new Gson().toJsonTree(bill.getClient()));
-            billDetails.add(PRODUCTS, new Gson().toJsonTree(bill.getProducts()));
+            billDetails.add(PRODUCTS, new Gson().toJsonTree(bill.getProducts(), Arrays.class));
             billDetails.addProperty(TAX, bill.TAX);
             billDetails.addProperty(TOTAL, bill.getTotal());
             billObject.add(BILL, billDetails);

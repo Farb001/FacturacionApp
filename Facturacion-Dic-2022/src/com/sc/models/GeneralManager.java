@@ -7,6 +7,7 @@ import com.sc.models.billing.Client;
 import com.sc.models.inventory.InventoryManager;
 import com.sc.models.inventory.Product;
 import com.sc.utilities.JsonUtilities;
+import com.sc.utilities.PDFManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,11 +17,13 @@ public class GeneralManager {
     private final InventoryManager inventoryManager;
     private final BillingManager billingManager;
     private final JsonUtilities jsonUtilities;
+    private final PDFManager pdfManager;
 
     public GeneralManager() {
         this.inventoryManager = new InventoryManager();
         this.jsonUtilities = new JsonUtilities();
         this.billingManager = new BillingManager();
+        this.pdfManager = new PDFManager();
     }
 
     public void loadInfo() throws IOException {
@@ -103,5 +106,9 @@ public class GeneralManager {
 
     public Bill getBill(int code) {
         return billingManager.getBill(code);
+    }
+
+    public void generateTicket(Bill bill){
+        pdfManager.generateTicket(bill);
     }
 }

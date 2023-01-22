@@ -54,6 +54,14 @@ public class Bill {
         return totalPrice;
     }
 
+    public double getSubTotal(){
+        double totalPrice = 0;
+        for (int i = 0; i < products.size(); i++) {
+            totalPrice += (products.get(i).getPrice() * products.get(i).getQuantity());
+        }
+        return totalPrice;
+    }
+
     public void setTotal(double total) {
         this.total = total;
     }
@@ -64,5 +72,15 @@ public class Bill {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "code=" + code +
+                ", products=" + products +
+                ", total=" + total +
+                ", client=" + client +
+                '}';
     }
 }

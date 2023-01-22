@@ -64,4 +64,17 @@ public class BillingTest {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    public void generatePDF(){
+        try {
+            generalManager.loadInfo();
+            Bill bill = generalManager.getBill(12);
+            //System.out.println(bill.toString());
+            generalManager.generateTicket(bill);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
