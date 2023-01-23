@@ -111,4 +111,8 @@ public class GeneralManager {
     public void generateTicket(Bill bill){
         pdfManager.generateTicket(bill);
     }
+
+    public void generateDetailedTicket(Bill bill){
+        pdfManager.generateDetailedTicket(bill);
+    }
 }

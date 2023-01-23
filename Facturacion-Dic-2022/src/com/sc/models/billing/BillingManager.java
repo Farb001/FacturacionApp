@@ -1,7 +1,5 @@
 package com.sc.models.billing;
 
-import com.sc.models.inventory.Product;
-
 import java.util.ArrayList;
 
 public class BillingManager {

@@ -28,7 +28,7 @@ public class BillingTest {
 
     @Test
     public void addBillTest(){
-        billingManager.addBill(products, 12, new Client(1002693485, "Fabian", "Rodriguez"));
+        billingManager.addBill(products, 12, new Client(1002693485, "Fabian", "Rodriguez", "Carrera 7a #7-86", "Duitama", "Boyacá", "3203316478", "farb26@gmail.com"));
         Assert.assertTrue(billingManager.getBill(12).getProducts().get(0).getName().equalsIgnoreCase("Arroz"));
     }
 
@@ -36,14 +36,14 @@ public class BillingTest {
     public void editBillTest(){
         ArrayList<BillProduct> newProducts = new ArrayList<>();
         newProducts.add(new BillProduct(33, 3500, "Jabon", 4));
-        billingManager.addBill(products, 12, new Client(1002693485, "Fabian", "Rodriguez"));
+        billingManager.addBill(products, 12, new Client(1002693485, "Fabian", "Rodriguez", "Carrera 7a #7-86", "Duitama", "Boyacá", "3203316478", "farb26@gmail.com"));
         billingManager.editBill(newProducts, 12);
         Assert.assertTrue(billingManager.getBill(12).getProducts().get(0).getName().equalsIgnoreCase("Jabon"));
     }
 
     @Test
     public void deleteBillTest(){
-        billingManager.addBill(products, 12, new Client(1002693485, "Fabian", "Rodriguez"));
+        billingManager.addBill(products, 12, new Client(1002693485, "Fabian", "Rodriguez", "Carrera 7a #7-86", "Duitama", "Boyacá", "3203316478", "farb26@gmail.com"));
         billingManager.deleteBill(12);
         Assert.assertTrue(billingManager.getBill(12).getProducts() == null);
     }
@@ -57,7 +57,7 @@ public class BillingTest {
             BillProduct product2 = new BillProduct(aux2.getCode(), aux2.getFirstPrice(), aux2.getName().replace("\"", "").trim(), 2);
             products.add(product);
             products.add(product2);
-            generalManager.addBill(products, 12, new Client(1002693485, "Fabian", "Rodriguez"));
+            generalManager.addBill(products, 12, new Client(1002693485, "Fabian", "Rodriguez", "Carrera 7a #7-86", "Duitama", "Boyacá", "3203316478", "farb26@gmail.com"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (Exception e) {
@@ -70,8 +70,8 @@ public class BillingTest {
         try {
             generalManager.loadInfo();
             Bill bill = generalManager.getBill(12);
-            //System.out.println(bill.toString());
             generalManager.generateTicket(bill);
+            generalManager.generateDetailedTicket(bill);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

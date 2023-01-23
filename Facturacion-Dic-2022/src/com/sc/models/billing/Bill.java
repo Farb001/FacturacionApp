@@ -13,6 +13,7 @@ public class Bill {
     private double total;
     private Client client;
 
+
     public Bill(ArrayList<BillProduct> products, double total, int code, Client client) {
         this.products = products;
         this.total = total;
