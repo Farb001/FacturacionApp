@@ -1,0 +1,24 @@
+[
+  {
+    "company": {
+      "name": "Supermercado",
+      "address": "Avenida 9 #8-15",
+      "city": "Tunja",
+      "department": "BOYACA",
+      "phoneNumber": "3158716534",
+      "email": "supermercado@gmail.com",
+      "imgPath": "path"
+    }
+  },
+  {
+    "company": {
+      "name": "Supermercado 2",
+      "address": "Avenida 9 #8-15",
+      "city": "Duitama",
+      "department": "BOYACA",
+      "phoneNumber": "3158716534",
+      "email": "supermercado2@gmail.com",
+      "imgPath": "path2"
+    }
+  }
+]

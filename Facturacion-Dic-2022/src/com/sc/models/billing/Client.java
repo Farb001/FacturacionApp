@@ -1,5 +1,7 @@
 package com.sc.models.billing;
 
+import com.sc.enums.DepartmentsEnum;
+
 public class Client {
 
     private long id;
@@ -7,11 +9,11 @@ public class Client {
     private String lastName;
     private String address;
     private String city;
-    private String department;
+    private DepartmentsEnum department;
     private String phoneNumber;
     private String email;
 
-    public Client(long id, String name, String lastName, String address, String city, String department, String phoneNumber, String email) {
+    public Client(long id, String name, String lastName, String address, String city, DepartmentsEnum department, String phoneNumber, String email) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -62,11 +64,11 @@ public class Client {
         this.city = city;
     }
 
-    public String getDepartment() {
+    public DepartmentsEnum getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(DepartmentsEnum department) {
         this.department = department;
     }
 
@@ -92,6 +94,11 @@ public class Client {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", department='" + department + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

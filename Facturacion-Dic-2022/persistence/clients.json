@@ -1,0 +1,26 @@
+[
+  {
+    "client": {
+      "id": 1002693485,
+      "name": "Fabian",
+      "lastName": "Rodriguez",
+      "address": "Carrera 7a #7-86",
+      "city": "Duitama",
+      "department": "Boyaca",
+      "phoneNumber": "3203316477",
+      "email": "fabian25buitrago@gmail.com"
+    }
+  },
+  {
+    "client": {
+      "id": 1002693486,
+      "name": "Andrey",
+      "lastName": "Buitrago",
+      "address": "Carrera 7a #7-86",
+      "city": "Duitama",
+      "department": "Boyaca",
+      "phoneNumber": "3203316477",
+      "email": "A_buitrago@gmail.com"
+    }
+  }
+]

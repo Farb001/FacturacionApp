@@ -22,9 +22,9 @@ public class InventoryTest {
     @Test
     public void testAddProduct() {
         try {
-            manager.addProduct(1, "Arroz", 30, "Comida", 2500, 3000, 5000);
             manager.addProduct(2, "Jabon", 50, "Aseo general", 3200, 2500, 3500);
-            Assert.assertTrue("Jabon".equalsIgnoreCase(manager.getProduct(2).getName()));
+            manager.addProduct(1, "Arroz", 30, "Comida", 2500, 3000, 5000);
+            Assert.assertTrue(manager.getProduct(2).getName().equalsIgnoreCase("Jabon"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
